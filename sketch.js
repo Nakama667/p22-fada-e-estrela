@@ -1,59 +1,50 @@
-var canvas;
-var bloco1,bloco2,bloco3,bloco4;
-var bola, edges;
-var music;
 
-function preload(){
-    music = loadSound("music.mp3");
-}
+var fairyImg,starImg,bgImage;
+
+var fada,estrela;
 
 
-function setup(){
-    canvas = createCanvas(800,600);
-
-    bloco1 = createSprite(0,580,360,30);
-    bloco1.shapeColor = rgb(0,0,255);
-
-    bloco2 = createSprite(295,580,200,30);
-    bloco2.shapeColor = rgb(255,128,0);
-
-    bloco3 = createSprite(515,580,200,30);
-    bloco3.shapeColor = rgb(153,0,76);
-
-    bloco4 = createSprite(740,580,220,30);
-    bloco4.shapeColor = rgb(0,100,0);
-
-    bola = createSprite(random(20,750),100, 40,40);
-    bola.shapeColor = rgb(255,255,255);
-    bola.velocityX = 4;
-    bola.velocityY = 9;
+function preload()
+{
+  bgImage= loadImage("images/starNight.png");
+  fairyImg=loadImage("images/fairy.png");
+  starImg=loadImage("images/star.png");
 
 }
+
+
+
+function setup() {
+  createCanvas(800, 750);
+  
+  fada =  createSprite(200,700,20,60);
+  fada.addImage(fairyImg);
+  fada.scale=0.1;
+
+
+  estrela= createSprite(700,100,20,20);
+  estrela.addImage(starImg);
+  estrela.scale=0.1;
+}
+
 
 function draw() {
-    background(rgb(169,169,169));
-    edges=createEdgeSprites();
-    bola.bounceOff(edges);
+  background(bgImage);
 
-    if(bloco1.isTouching(bola) && bola.bounceOff(bloco1)){
-        bola.shapeColor = rgb(0,0,255);
-        music.play();
-    }
+  if(keyDown("left"))
+  {
+    fada.x=fada.x-5;
+  }
+  if(keyDown("right"))
+  {
+    fada.x=fada.x+5;
+  }
 
-    if(bloco2.isTouching(bola)){
-        bola.shapeColor = rgb(255,128,0);
-        bola.velocityX = 0;
-        bola.velocityY = 0;
-        music.stop();
-    }
+  if(keyDown("space"))
+  {
+    estrela.y=estrela.y+5;
+  }
 
-    if(bloco3.isTouching(bola) && bola.bounceOff(bloco3)){
-        bola.shapeColor = rgb(153,0,76);
-    }
+  drawSprites();
 
-    if(bloco4.isTouching(bola) && bola.bounceOff(bloco4)){
-        bola.shapeColor = rgb(0,100,0);
-    }
-
-    drawSprites();
 }
